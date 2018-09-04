@@ -1,0 +1,8 @@
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/CMakeFiles/rebuild_cache.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/CMakeFiles/edit_cache.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/CMakeFiles/gcmt-dll.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/CMakeFiles/gc-lib.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/CMakeFiles/gcmt-lib.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/tests/CMakeFiles/rebuild_cache.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/tests/CMakeFiles/gctest.dir
+/home/akshay/Colg_files/MCSV/work/CTLmc/gc-7.4.2/tests/CMakeFiles/edit_cache.dir

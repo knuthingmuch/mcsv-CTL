@@ -1,0 +1,95 @@
+  
+NOTATION:
+
+  T = Transition
+  I = Initial states 
+  P = Property
+  E = Expected
+
+  Expected: states which satisfy the property and are also reachable. Used for testing.
+================================================
+3 bit counter:
+  input: postfix notation with spaces ('^' represent xor, '=' is iff)
+
+  T = x0 ! x0' = x0 x1 ^ x1' = . x0 x1 . x2 ^ x2' = .
+  
+  I = x0 x1 . x2 .
+  P = EX( x0 ! x1 ! . x2 ! . )
+  E = x0 x1 . x2 .
+
+  ./main "x0 x1 . x2 ." "x0 ! x0' = x0 x1 ^ x1' = . x0 x1 . x2 ^ x2' = ." "x0 ! x1 ! . x2 ! . EX" testEX.dot "x0 x1 . x2 ."
+
+  //Works? Yes.
+  -----------------------------------------------
+
+  I = x0 x1 . x2 .
+  P = AX( x0 ! x1 ! . x2 ! . )
+  E = x0 x1 . x2 .
+
+  ./main "x0 x1 . x2 ." "x0 ! x0' = x0 x1 ^ x1' = . x0 x1 . x2 ^ x2' = ." "x0 ! x1 ! . x2 ! . AX" testAX.dot "x0 x1 . x2 ."
+
+  //Works? Yes.
+  -----------------------------------------------
+  I = x0 ! x1 ! . x2 ! .
+  P = x0 ! x1 EU (same as E[ !x0 U x1 ])
+  E = x1
+
+  ./main "x0 ! x1 ! . x2 ! ." "x0 ! x0' = x0 x1 ^ x1' = . x0 x1 . x2 ^ x2' = ." "x0 ! x1 EU" testEU_3bitctr.dot "x1"
+
+  //Works? Yes.
+
+  ===============================================
+Some arbitrary TS I came up with:
+
+  T = x1 ! x0 ! . x1' x0' ! . . x1 ! x0 . x1' ! x0' ! . . + x1 x0 . x1' ! x0' ! . . + x1 x0 ! . x1' x0' . x1' ! x0' . + . + 
+  
+  I =x0 ! x1 ! .
+  P = AX( x0 )
+  E = x1 x0 ! .
+
+  Run:
+  ./main "x0 ! x1 ! ." "x1 ! x0 ! . x1' x0' ! . . x1 ! x0 . x1' ! x0' ! . . + x1 x0 . x1' ! x0' ! . . + x1 x0 ! . x1' x0' . x1' ! x0' . + . +" "x0 AX" testAX.dot "x1 x0 ! ."
+
+
+  //Works? Yes.
+  ----------------------------
+
+  I =x0 ! x1 ! .
+  P = EX( x1 ! x0 ! . )
+  E = x0
+
+  Run: 
+  ./main "x0 ! x1 ! ." "x1 ! x0 ! . x1' x0' ! . . x1 ! x0 . x1' ! x0' ! . . + x1 x0 . x1' ! x0' ! . . + x1 x0 ! . x1' x0' . x1' ! x0' . + . +" "x1 ! x0 ! . EX" testEX.dot "x0"
+
+  //Works? Yes.
+================================================
+Another arbitrary TS:
+
+  T = x2 ! x1 ! . x0 ! . x2' x1' ! . x0' ! . . x2 x1 ! . x0 ! . x2' x1' . x0' ! . . + x2 x1 . x0 ! . x2' x1' ! . x0' . . + x2 x1 ! . x0 . x2' x1' ! . x0' ! . . + x2 ! x1 ! . x0 ! . x2' ! x1' ! . x0' . . + x2 ! x1 ! . x0 . x2' ! x1' . x0' ! . . + x2 ! x1 . x0 ! . x2' ! x1' ! . x0' . . +
+
+  I = x2 ! x1 ! . x0 ! .
+  +++++++++++++++++++++++++++++++++++++++++++++
+
+  P = x2 x1 ! . x2 x1  . x0 ! . + EG
+  E = x2 x1 ! . x2 x1 . x0 ! . +
+
+  ./main "x2 ! x1 ! . x0 ! ." "x2 ! x1 ! . x0 ! . x2' x1' ! . x0' ! . . x2 x1 ! . x0 ! . x2' x1' . x0' ! . . + x2 x1 . x0 ! . x2' x1' ! . x0' . . + x2 x1 ! . x0 . x2' x1' ! . x0' ! . . + x2 ! x1 ! . x0 ! . x2' ! x1' ! . x0' . . + x2 ! x1 ! . x0 . x2' ! x1' . x0' ! . . + x2 ! x1 . x0 ! . x2' ! x1' ! . x0' . . +" "x2 x1 ! . x2 x1  . x0 ! . + EG" testEG.dot "x2 x1 ! . x2 x1 . x0 ! . +"
+
+  //Works? Yes.
+  ----------------------------
+
+  P = x2 ! x1 . x0 ! . EF
+  E = x2 ! x1 ! . x2 ! x1 . x0 ! . +
+
+  ./main "x2 ! x1 ! . x0 ! ." "x2 ! x1 ! . x0 ! . x2' x1' ! . x0' ! . . x2 x1 ! . x0 ! . x2' x1' . x0' ! . . + x2 x1 . x0 ! . x2' x1' ! . x0' . . + x2 x1 ! . x0 . x2' x1' ! . x0' ! . . + x2 ! x1 ! . x0 ! . x2' ! x1' ! . x0' . . + x2 ! x1 ! . x0 . x2' ! x1' . x0' ! . . + x2 ! x1 . x0 ! . x2' ! x1' ! . x0' . . +" "x2 ! x1 . x0 ! . EF" testEG.dot "x2 ! x1 ! . x2 ! x1 . x0 ! . +"
+
+  //Works? Yes.
+  ----------------------------
+
+  P = x0 ! x0 EU (same as: E [ !x0 U x0])
+  E = x2 x1 . x0 . x2 ! x1 . x0 . + !
+
+  ./main "x2 ! x1 ! . x0 ! ." "x2 ! x1 ! . x0 ! . x2' x1' ! . x0' ! . . x2 x1 ! . x0 ! . x2' x1' . x0' ! . . + x2 x1 . x0 ! . x2' x1' ! . x0' . . + x2 x1 ! . x0 . x2' x1' ! . x0' ! . . + x2 ! x1 ! . x0 ! . x2' ! x1' ! . x0' . . + x2 ! x1 ! . x0 . x2' ! x1' . x0' ! . . + x2 ! x1 . x0 ! . x2' ! x1' ! . x0' . . +" "x0 ! x0 EU" testEU.dot "x2 x1 . x0 . x2 ! x1 . x0 . + !"
+
+  //Works? Yes.
+  ----------------------------

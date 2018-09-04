@@ -1,0 +1,28 @@
+digraph "DD" {
+size = "7.5,10"
+center = true;
+edge [dir = none];
+{ node [shape = plaintext];
+  edge [style = invis];
+  "CONST NODES" [style = invis];
+" x0 " -> " x1 " -> "CONST NODES"; 
+}
+{ rank = same; node [shape = box]; edge [style = invis];
+"  Image of (x0 ! x1 ! .) under (testAX.dot)  "; }
+{ rank = same; " x0 ";
+"0x15";
+}
+{ rank = same; " x1 ";
+"0x5";
+}
+{ rank = same; "CONST NODES";
+{ node [shape = box]; "0";
+}
+}
+"  Image of (x0 ! x1 ! .) under (testAX.dot)  " -> "0x15" [style = dotted];
+"0x15" -> "0";
+"0x15" -> "0x5" [style = dotted];
+"0x5" -> "0";
+"0x5" -> "0" [style = dotted];
+"0" [label = "1"];
+}
